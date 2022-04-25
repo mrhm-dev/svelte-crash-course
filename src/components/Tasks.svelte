@@ -50,10 +50,12 @@
         <ul class="list-group">
             {#each taskList as task}
                 <li class="list-group-item" transition:slide on:dblclick="{e => dblHandler(task.id)}">
-                    <input type="checkbox" class="form-check-input" checked={task.completed} on:change="{e => toggleCheck(e, task.id)}">
-                    <label>
-                        {task.completed ? 'Done!!!' : 'Not Yet Done!'}
-                    </label>
+                    <div class="pl-3">
+                        <input type="checkbox" class="form-check-input" checked={task.completed} on:change="{e => toggleCheck(e, task.id)}">
+                        <label>
+                            {task.completed ? 'Done!!!' : 'Not Yet Done!'}
+                        </label>
+                    </div>
                     <input type="text" 
                         bind:value={task.title}
                         disabled={!task.editable}
