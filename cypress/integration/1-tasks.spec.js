@@ -2,8 +2,12 @@
 ///<reference types="Cypress" />
 import { faker } from "@faker-js/faker";
 
-const taskTitle = faker.lorem.sentence();
-const taskDesc = faker.lorem.paragraph();
+let taskTitle = faker.lorem.sentence();
+let taskDesc = faker.lorem.paragraph();
+let colorPosition = faker.datatype.number({
+  min: 0,
+  max: 5,
+});
 
 before(() => {
   cy.visit("/");
@@ -32,7 +36,7 @@ describe("Tasks CRUD tests", () => {
   it("Should fill up the task form", () => {
     cy.get('[data-cy="task-title-input"]').type(taskTitle);
     cy.get('[data-cy="task-desc-textarea"]').type(taskDesc);
-    cy.get('[data-cy="colors-container"]').children().first().click();
+    cy.get('[data-cy="colors-container"]').children().eq(colorPosition).click();
   });
 
   it("Should successfully create a new task", () => {
@@ -44,5 +48,15 @@ describe("Tasks CRUD tests", () => {
     cy.get('[data-cy="saved-task-title"]')
       .first()
       .should("have.value", taskTitle);
+  });
+
+  it("Should mark new task as done", () => {
+    cy.get('[data-cy="mark-done-checkbox"]').first().should("be.visible");
+    cy.get('[data-cy="mark-done-checkbox"]').first().click();
+  });
+
+  it("Should verify the latest Done task", () => {
+    cy.get('[data-cy="task-item-label"]').should("be.visible");
+    cy.get('[data-cy="task-item-label"]').should("contain", "Done");
   });
 });

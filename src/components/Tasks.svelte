@@ -51,8 +51,10 @@
             {#each taskList as task}
                 <li class="list-group-item" transition:slide on:dblclick="{e => dblHandler(task.id)}">
                     <div class="pl-3">
-                        <input type="checkbox" class="form-check-input" checked={task.completed} on:change="{e => toggleCheck(e, task.id)}">
-                        <label>
+                        <input type="checkbox" class="form-check-input" checked={task.completed} on:change="{e => toggleCheck(e, task.id)}"
+                            data-cy="mark-done-checkbox"
+                        >
+                        <label data-cy="task-item-label">
                             {task.completed ? 'Done!!!' : 'Not Yet Done!'}
                         </label>
                     </div>
