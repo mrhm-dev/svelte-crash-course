@@ -42,7 +42,7 @@
 </style>
 
 <div class="my-3" transition:slide>
-    <h4>{label} Tasks</h4>
+    <h4 data-cy="tasks-title">{label} Tasks</h4>
     {#if taskList.length === 0}
         <p>There is No Task</p>
     {:else}
