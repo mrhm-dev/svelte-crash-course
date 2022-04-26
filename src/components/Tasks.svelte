@@ -46,7 +46,7 @@
     {#if taskList.length === 0}
         <p>There is No Task</p>
     {:else}
-        <p>Total Task: {$tasks.length} Active: {$tasks.length - totalComplete} Completed: {totalComplete}</p>
+        <p daya-cy="total-tasks-title">Total Task: {$tasks.length} Active: {$tasks.length - totalComplete} Completed: {totalComplete}</p>
         <ul class="list-group">
             {#each taskList as task}
                 <li class="list-group-item" transition:slide on:dblclick="{e => dblHandler(task.id)}">
@@ -61,6 +61,7 @@
                         disabled={!task.editable}
                         class="{task.completed ? 'form-control complete' : 'form-control'}"
                         on:keypress="{e => updateTask(e, task.id)}"
+                        data-cy="saved-task-title"
                     >
                     <div class="color mx-3" title={task.description} style="background: {task.color}"></div>
                 </li>
