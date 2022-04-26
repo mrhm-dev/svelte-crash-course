@@ -72,6 +72,9 @@ describe("Tasks update tests", () => {
     cy.get('[data-cy="tasks-list"]').should("be.visible");
     cy.get('[data-cy="tasks-list"]').children().eq(0).should("be.visible");
     cy.get('[data-cy="tasks-list"]').children().eq(0).dblclick();
+  });
+
+  it("Should clear and update the latest task", () => {
     cy.get('[data-cy="saved-task-title"]').first().clear();
     cy.get('[data-cy="saved-task-title"]')
       .first()
