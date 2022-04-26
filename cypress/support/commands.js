@@ -12,6 +12,23 @@
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
 //
+import { faker } from "@faker-js/faker";
+
+Cypress.Commands.add("createTask", () => {
+  cy.get('[data-cy="task-title-input"]').type(faker.lorem.sentence());
+  cy.get('[data-cy="task-desc-textarea"]').type(faker.lorem.sentence());
+  cy.get('[data-cy="colors-container"]')
+    .children()
+    .eq(
+      faker.datatype.number({
+        min: 0,
+        max: 5,
+      })
+    )
+    .click();
+
+  cy.get('[data-cy="create-task-btn"]').click();
+});
 //
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })

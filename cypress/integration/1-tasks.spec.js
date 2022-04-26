@@ -13,7 +13,7 @@ before(() => {
   cy.visit("/");
 });
 
-describe("Tasks CRUD tests", () => {
+describe("Tasks create tests", () => {
   it("Should successfully click Create button", () => {
     cy.get('[data-cy="create-btn"]').click();
   });
@@ -58,5 +58,23 @@ describe("Tasks CRUD tests", () => {
   it("Should verify the latest Done task", () => {
     cy.get('[data-cy="task-item-label"]').should("be.visible");
     cy.get('[data-cy="task-item-label"]').should("contain", "Done");
+  });
+
+  it("Should add 3 more tasks", () => {
+    cy.createTask();
+    cy.createTask();
+    cy.createTask();
+  });
+});
+
+describe("Tasks update tests", () => {
+  it("Should double click latest task title to enable input", () => {
+    cy.get('[data-cy="tasks-list"]').should("be.visible");
+    cy.get('[data-cy="tasks-list"]').children().eq(0).should("be.visible");
+    cy.get('[data-cy="tasks-list"]').children().eq(0).dblclick();
+    cy.get('[data-cy="saved-task-title"]').first().clear();
+    cy.get('[data-cy="saved-task-title"]')
+      .first()
+      .type(`Updated ${faker.lorem.sentence()}{enter}`);
   });
 });

@@ -47,7 +47,7 @@
         <p>There is No Task</p>
     {:else}
         <p daya-cy="total-tasks-title">Total Task: {$tasks.length} Active: {$tasks.length - totalComplete} Completed: {totalComplete}</p>
-        <ul class="list-group">
+        <ul class="list-group" data-cy="tasks-list">
             {#each taskList as task}
                 <li class="list-group-item" transition:slide on:dblclick="{e => dblHandler(task.id)}">
                     <div class="pl-3">
