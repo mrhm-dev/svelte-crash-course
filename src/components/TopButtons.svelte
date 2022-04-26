@@ -25,7 +25,7 @@
     <button 
         class="btn btn-warning btn-sm"
         on:click="{() => showList = !showList}"
-        data-cy="hide-btn"
+        data-cy="show-hide-btn"
     >
         {showList ? "Hide" : "Show"}
     </button>

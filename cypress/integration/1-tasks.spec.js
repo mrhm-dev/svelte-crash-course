@@ -81,3 +81,66 @@ describe("Tasks update tests", () => {
       .type(`Updated ${faker.lorem.sentence()}{enter}`);
   });
 });
+
+describe("Tasks show / hide tests", () => {
+  it("Should hide the tasks list", () => {
+    cy.get('[data-cy="show-hide-btn"]').click();
+    cy.get('[data-cy="tasks-list"]').should("not.be.visible");
+  });
+
+  it("Should show the tasks list", () => {
+    cy.get('[data-cy="show-hide-btn"]').should("contain", "Show");
+    cy.get('[data-cy="show-hide-btn"]').click();
+    cy.get('[data-cy="tasks-list"]').should("be.visible");
+  });
+});
+
+describe("Tasks list filter tests", () => {
+  it("Should show the completed tasks", () => {
+    cy.get('[data-cy="completed-btn"]').click();
+    cy.get('[data-cy="completed-tasks-count"]')
+      .invoke("text")
+      .then((val) => {
+        let completedCount = val;
+        cy.wrap(completedCount[0]).as("completedCount");
+      });
+    cy.get("@completedCount").then((ccount) => {
+      cy.get('[data-cy="tasks-list"]').children().should("have.length", ccount);
+    });
+  });
+
+  it("Should show the active tasks", () => {
+    cy.get('[data-cy="active-btn"]').click();
+    cy.get('[data-cy="active-tasks-count"]')
+      .invoke("text")
+      .then((val) => {
+        let activeCount = val;
+        cy.wrap(activeCount[0]).as("activeCount");
+      });
+    cy.get("@activeCount").then((acount) => {
+      cy.get('[data-cy="tasks-list"]').children().should("have.length", acount);
+    });
+  });
+
+  it("Should show all the tasks", () => {
+    cy.get('[data-cy="all-btn"]').click();
+    cy.get('[data-cy="total-tasks-count"]')
+      .invoke("text")
+      .then((val) => {
+        let totalCount = val;
+        cy.wrap(totalCount[0]).as("totalCount");
+      });
+    cy.get("@totalCount").then((tcount) => {
+      cy.get('[data-cy="tasks-list"]').children().should("have.length", tcount);
+    });
+  });
+});
+
+describe("Tasks list clear tests", () => {
+  it("Should clear the completed tasks", () => {
+    cy.get('[data-cy="clear-btn"]').click();
+    cy.get('[data-cy="completed-tasks-count"]')
+      .invoke("text")
+      .should("eq", "0");
+  });
+});
