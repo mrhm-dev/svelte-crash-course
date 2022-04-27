@@ -24,7 +24,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3 my-4">
-            <h1 class="diaplay-4">Hello Catians</h1>
+            <h1 class="diaplay-4" data-cy="app-heading">Hello Catians</h1>
             <TopButtons 
                 bind:showForm={toggleCreateTaskForm} 
                 bind:showList={toggleTaskList}

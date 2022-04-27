@@ -42,23 +42,28 @@
 </style>
 
 <div class="my-3" transition:slide>
-    <h4>{label} Tasks</h4>
+    <h4 data-cy="tasks-title">{label} Tasks</h4>
     {#if taskList.length === 0}
         <p>There is No Task</p>
     {:else}
-        <p>Total Task: {$tasks.length} Active: {$tasks.length - totalComplete} Completed: {totalComplete}</p>
-        <ul class="list-group">
+        <p daya-cy="total-tasks-title">Total Task: <span data-cy="total-tasks-count">{$tasks.length}</span> Active: <span data-cy="active-tasks-count">{$tasks.length - totalComplete}</span> Completed: <span data-cy="completed-tasks-count">{totalComplete}</span></p>
+        <ul class="list-group" data-cy="tasks-list">
             {#each taskList as task}
                 <li class="list-group-item" transition:slide on:dblclick="{e => dblHandler(task.id)}">
-                    <input type="checkbox" class="form-check-input" checked={task.completed} on:change="{e => toggleCheck(e, task.id)}">
-                    <label>
-                        {task.completed ? 'Done!!!' : 'Not Yet Done!'}
-                    </label>
+                    <div class="pl-3">
+                        <input type="checkbox" class="form-check-input" checked={task.completed} on:change="{e => toggleCheck(e, task.id)}"
+                            data-cy="mark-done-checkbox"
+                        >
+                        <label data-cy="task-item-label">
+                            {task.completed ? 'Done!!!' : 'Not Yet Done!'}
+                        </label>
+                    </div>
                     <input type="text" 
                         bind:value={task.title}
                         disabled={!task.editable}
                         class="{task.completed ? 'form-control complete' : 'form-control'}"
                         on:keypress="{e => updateTask(e, task.id)}"
+                        data-cy="saved-task-title"
                     >
                     <div class="color mx-3" title={task.description} style="background: {task.color}"></div>
                 </li>

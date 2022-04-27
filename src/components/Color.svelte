@@ -19,11 +19,14 @@
     }
 </style>
 
-<div class="d-flex">
+<div class="d-flex" data-cy="colors-container">
     {#each colors as color}
         <div class="color mx-2 {selectedColor === color ? 'selected':''}" 
             style="background: {color}" 
-            on:click="{() => changeColor(color)}">
+            on:click="{() => changeColor(color)}"
+            data-cy="background-color-{color}"
+            >
+            
         </div>
     {/each}
 </div>
