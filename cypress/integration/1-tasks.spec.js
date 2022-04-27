@@ -9,28 +9,32 @@ let colorPosition = faker.datatype.number({
   max: 5,
 });
 
+let testElmIdsArr = [
+  "task-title-form",
+  "task-title-input",
+  "task-desc-title-form",
+  "task-desc-textarea",
+  "background-color-orange",
+  "background-color-red",
+  "background-color-yellow",
+  "background-color-blue",
+  "background-color-purple",
+  "background-color-green",
+];
+
 before(() => {
   cy.visit("/");
 });
 
 describe("Tasks create tests", () => {
   it("Should successfully click Create button", () => {
-    cy.get('[data-cy="create-btn"]').click();
+    cy.clickElm("create-btn");
   });
 
   it("Create task form should be visible", () => {
-    cy.get('[data-cy="task-title-form"]').should("be.visible");
-    cy.get('[data-cy="task-title-input"]').should("be.visible");
-    cy.get('[data-cy="task-desc-title-form"]').should("be.visible");
-    cy.get('[data-cy="task-desc-textarea"]').should("be.visible");
-    cy.get('[data-cy="background-color-orange"]').should("be.visible");
-    cy.get('[data-cy="background-color-red"]').should("be.visible");
-    cy.get('[data-cy="background-color-yellow"]').should("be.visible");
-    cy.get('[data-cy="background-color-blue"]').should("be.visible");
-    cy.get('[data-cy="background-color-purple"]').should("be.visible");
-    cy.get('[data-cy="background-color-green"]').should("be.visible");
+    testElmIdsArr.map((item) => cy.beVisible(item));
     cy.get('[data-cy="colors-container"]').children().should("have.length", 6);
-    cy.get('[data-cy="create-task-btn"]').should("be.visible");
+    cy.beVisible("create-task-btn");
   });
 
   it("Should fill up the task form", () => {
@@ -40,7 +44,7 @@ describe("Tasks create tests", () => {
   });
 
   it("Should successfully create a new task", () => {
-    cy.get('[data-cy="create-task-btn"]').click();
+    cy.clickElm("create-task-btn");
   });
 
   it("Should verify the newly created task", () => {
@@ -56,20 +60,20 @@ describe("Tasks create tests", () => {
   });
 
   it("Should verify the latest Done task", () => {
-    cy.get('[data-cy="task-item-label"]').should("be.visible");
-    cy.get('[data-cy="task-item-label"]').should("contain", "Done");
+    cy.beVisible("task-item-label");
+    cy.shouldContain("task-item-label", "Done");
   });
 
-  it("Should add 3 more tasks", () => {
-    cy.createTask();
-    cy.createTask();
-    cy.createTask();
+  it("Should add 5 more tasks", () => {
+    for (let index = 0; index < 5; index++) {
+      cy.createTask();
+    }
   });
 });
 
 describe("Tasks update tests", () => {
   it("Should double click latest task title to enable input", () => {
-    cy.get('[data-cy="tasks-list"]').should("be.visible");
+    cy.beVisible("tasks-list");
     cy.get('[data-cy="tasks-list"]').children().eq(0).should("be.visible");
     cy.get('[data-cy="tasks-list"]').children().eq(0).dblclick();
   });
@@ -84,20 +88,20 @@ describe("Tasks update tests", () => {
 
 describe("Tasks show / hide tests", () => {
   it("Should hide the tasks list", () => {
-    cy.get('[data-cy="show-hide-btn"]').click();
+    cy.clickElm("show-hide-btn");
     cy.get('[data-cy="tasks-list"]').should("not.be.visible");
   });
 
   it("Should show the tasks list", () => {
-    cy.get('[data-cy="show-hide-btn"]').should("contain", "Show");
-    cy.get('[data-cy="show-hide-btn"]').click();
-    cy.get('[data-cy="tasks-list"]').should("be.visible");
+    cy.shouldContain("show-hide-btn", "Show");
+    cy.clickElm("show-hide-btn");
+    cy.beVisible("tasks-list");
   });
 });
 
 describe("Tasks list filter tests", () => {
   it("Should show the completed tasks", () => {
-    cy.get('[data-cy="completed-btn"]').click();
+    cy.clickElm("completed-btn");
     cy.get('[data-cy="completed-tasks-count"]')
       .invoke("text")
       .then((val) => {
@@ -110,7 +114,7 @@ describe("Tasks list filter tests", () => {
   });
 
   it("Should show the active tasks", () => {
-    cy.get('[data-cy="active-btn"]').click();
+    cy.clickElm("active-btn");
     cy.get('[data-cy="active-tasks-count"]')
       .invoke("text")
       .then((val) => {
@@ -123,7 +127,7 @@ describe("Tasks list filter tests", () => {
   });
 
   it("Should show all the tasks", () => {
-    cy.get('[data-cy="all-btn"]').click();
+    cy.clickElm("all-btn");
     cy.get('[data-cy="total-tasks-count"]')
       .invoke("text")
       .then((val) => {
@@ -138,7 +142,7 @@ describe("Tasks list filter tests", () => {
 
 describe("Tasks list clear tests", () => {
   it("Should clear the completed tasks", () => {
-    cy.get('[data-cy="clear-btn"]').click();
+    cy.clickElm("clear-btn");
     cy.get('[data-cy="completed-tasks-count"]')
       .invoke("text")
       .should("eq", "0");

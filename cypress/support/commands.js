@@ -29,6 +29,18 @@ Cypress.Commands.add("createTask", () => {
 
   cy.get('[data-cy="create-task-btn"]').click();
 });
+
+Cypress.Commands.add("clickElm", (btnId) => {
+  cy.get(`[data-cy=${btnId}]`).click();
+});
+
+Cypress.Commands.add("beVisible", (elmId) => {
+  cy.get(`[data-cy=${elmId}]`).should("be.visible");
+});
+
+Cypress.Commands.add("shouldContain", (id, val) => {
+  cy.get(`[data-cy=${id}]`).should("contain", val);
+});
 //
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
